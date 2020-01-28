@@ -40,7 +40,7 @@ const DimmableCircuit = ({
               setValue(e);
             }
           }}
-          onAfterChange={() => setTimeout(() => setChanging(false), 500)}
+          // onAfterChange={() => setTimeout(() => setChanging(false), 500)}
         />
       )}
     </div>

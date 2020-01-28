@@ -24,16 +24,22 @@ const ACCircuitWidget = ({
   }, [shoreStatus, inverterStatus]);
   const [buttonState, setButtonState] = useState(selectValue);
   const handleChange = (e) => {
+    let prevBtnState = buttonState
     if (e.target.value === 'Shore') {
-      postCircuitStateUpdate({ ...shoreStatus, state: 1 }).then((res) => res.acknowledged && setButtonState('Shore'));
+      setButtonState('Shore')
+      postCircuitStateUpdate({ ...shoreStatus, state: 1 }).then((res) =>{
+        !res.acknowledged && setButtonState(prevBtnState) 
+      } );
       postCircuitStateUpdate({ ...inverterStatus, state: 0 });
     }
     if (e.target.value === 'On') {
-      postCircuitStateUpdate({ ...inverterStatus, state: 1 }).then((res) => res.acknowledged && setButtonState('On'));
+      setButtonState('On')
+      postCircuitStateUpdate({ ...inverterStatus, state: 1 }).then((res) => !res.acknowledged && setButtonState(prevBtnState));
       postCircuitStateUpdate({ ...shoreStatus, state: 0 });
     } if (e.target.value === 'Off') {
+      setButtonState('Off')
       postCircuitStateUpdate({ ...inverterStatus, state: 0 });
-      postCircuitStateUpdate({ ...shoreStatus, state: 0 }).then((res) => res.acknowledged && setButtonState('Off'));
+      postCircuitStateUpdate({ ...shoreStatus, state: 0 }).then((res) => !res.acknowledged && setButtonState(prevBtnState));
     }
   };
   return (

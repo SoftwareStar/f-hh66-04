@@ -17,7 +17,7 @@ const BinaryCircuit = ({
           dispatch({ type: RECEIVE_CIRCUITS_UPDATE, payload: { type: 'loads', circuit: circuit.name, [circuit.name]: { state: e ? 1 : 0, actualState: e ? 1 : 0 } } });
         }
         // setTimeout(() => {}, 2000);
-      });
+    });
   };
   return (
     <Switch
