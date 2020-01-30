@@ -47,9 +47,6 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              modifyVars: {
-              'hack': `true; @import "../node_modules/antd/lib/style/index";`, // Override with less file
-              },
               javascriptEnabled: true,
             },
           },
@@ -74,11 +71,26 @@ module.exports = {
   ],
   devServer: {
     contentBase: './dist',
-    hot: true
+    hot: true,
+    compress: true, 
+    port: 9000,
+    watchContentBase: true, 
+    watchOptions: {
+        poll: true
+    },
+    historyApiFallback: true, 
+    historyApiFallback: {
+        index: '/index.html',
+    },
   },
   optimization: {
     splitChunks: {
       chunks: 'all',
     }
+  },
+  devtool: 'cheap-module-eval-source-map',
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   }
 };
